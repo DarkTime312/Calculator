@@ -71,23 +71,25 @@ def humanize_int_numbers(str_num: str, reverse=False) -> str:
 class Calculator(ctk.CTk):
     def __init__(self, is_dark):
         super().__init__(fg_color=BLACK if is_dark else WHITE)
+
         ctk.set_appearance_mode('dark' if is_dark else 'light')
-        self.is_dark = is_dark
         # window setup
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
         self.iconbitmap('empty.ico')
+
         self.last_action_was_equal = False
         self.buttons_disabled = False
+        self.is_dark: bool = is_dark
 
         self.window_layout()
-        # vars
+        # variables
         self.input_num = ctk.StringVar(value='0')
         self.result_var = ctk.StringVar(value='')
 
         self.create_widgets()
 
-    def window_layout(self):
+    def window_layout(self) -> None:
         """
         Sets the window layout using grid manager.
         """
@@ -98,17 +100,14 @@ class Calculator(ctk.CTk):
             self.columnconfigure(index, weight=1, uniform='a')
 
     def create_widgets(self):
-        font = ctk.CTkFont(family=FONT, size=NORMAL_FONT_SIZE)
-        font_large = ctk.CTkFont(family=FONT, size=OUTPUT_FONT_SIZE)
-
         self.top_output_label = ctk.CTkLabel(self,
-                                            font=font,
-                                            textvariable=self.result_var,
-                                            text_color=WHITE if self.is_dark else BLACK)
+                                             font=(FONT, NORMAL_FONT_SIZE),
+                                             textvariable=self.result_var,
+                                             text_color=WHITE if self.is_dark else BLACK)
         self.top_output_label.grid(row=0, column=0, columnspan=4, sticky='se', padx=10)
 
         self.input_label = ctk.CTkLabel(self,
-                                        font=font_large,
+                                        font=(FONT, OUTPUT_FONT_SIZE),
                                         textvariable=self.input_num,
                                         text_color=WHITE if self.is_dark else BLACK)
         self.input_label.grid(row=1, column=0, columnspan=4, sticky='e', padx=10)
@@ -126,7 +125,7 @@ class Calculator(ctk.CTk):
         self.num_9 = NumButton(self, num=9, command=lambda: self.press_num('9'))
         self.num_dot = NumButton(self, num='.', command=lambda: self.press_num('.'))
 
-        # other buttons
+        # operator buttons
         self.clear_btn = Button(self, text='clear', command=self.clear)
         self.invert_btn = Button(self, text='invert', command=self.change_sign)
         self.percent_btn = Button(self, text='percent', command=self.convert_to_percent)
