@@ -11,6 +11,8 @@ NORMAL_FONT_SIZE = 32
 STYLING = {
     'gap': 0.5,
     'corner-radius': 0}
+SPACE = ' '
+MATH_OPERATIONS = '+-*/'
 
 NUM_POSITIONS = {
     '.': {'col': 2, 'row': 6, 'span': 1},

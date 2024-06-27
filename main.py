@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from settings import *
 from buttons import NumButton, Button, MathButton
+from typing import Literal
 import darkdetect
 
 
@@ -76,7 +77,8 @@ class Calculator(ctk.CTk):
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
         self.iconbitmap('empty.ico')
-        self.start_from_beginning = False
+        self.last_action_was_equal = False
+        self.buttons_disabled = False
 
         self.window_layout()
         # vars
@@ -134,7 +136,7 @@ class Calculator(ctk.CTk):
         self.multiply = MathButton(self, '*', command=lambda: self.math_operation('*'))
         self.minus = MathButton(self, '-', command=lambda: self.math_operation('-'))
         self.plus = MathButton(self, '+', command=lambda: self.math_operation('+'))
-        self.equal = MathButton(self, '=', command=self.equal)
+        self.equal = MathButton(self, '=', command=self.evaluate_expression)
 
     def press_num(self, pressed_num: str) -> None:
         """
@@ -179,12 +181,20 @@ class Calculator(ctk.CTk):
         Clear the calculator's current input and result display.
 
         This method performs the following actions:
-        1. Resets the input field to '0'.
-        2. Clears the result display.
+        1. Re-enables all buttons if they were previously disabled.
+        2. Resets the input field to '0'.
+        3. Clears the result display.
 
-        This effectively resets the calculator's visible state,
-        preparing it for a new calculation.
+        This effectively resets the calculator's visible state and functionality,
+        preparing it for a new calculation. It also ensures that all buttons
+        are operational after clearing, which is particularly useful if they
+        were disabled due to an error condition.
+
+        Returns:
+        None
         """
+        if self.buttons_disabled:
+            self.change_buttons_state(disabled=False)
         # Reset the input field to '0'
         self.input_num.set('0')
         # Clear the result display
@@ -219,38 +229,133 @@ class Calculator(ctk.CTk):
         # Update the input field with the new number
         self.input_num.set(new_num)
 
-    def convert_to_percent(self):
-        current_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
-        if current_num != '0':
-            new_num: float = float(current_num) / 100
-            self.input_num.set(str(new_num))
+    def convert_to_percent(self) -> None:
+        """
+        Convert the current input number to its percentage representation.
 
-    def math_operation(self, operator):
-        input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
-        result_num: str = self.result_var.get()
-        if not result_num or self.start_from_beginning:  # first time
-            final_result = str(input_num) + ' ' + str(operator)
-            self.start_from_beginning = False
-        elif result_num[-1] in set('+-*/') and input_num == '':
-            final_result = result_num[:-1] + operator
-        else:  # other times
-            final_result = str(result_num) + ' ' + str(input_num) + ' ' + str(operator)
+        This method performs the following actions:
+        1. Retrieves the current input number, removing any formatting.
+        2. If the input is not '0' or empty, it divides the number by 100.
+        3. Updates the input field with the new percentage value.
+
+        The function does nothing if the current input is '0' or an empty string.
+        """
+        # Remove formatting from the current input number
+        current_input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
+
+        # Only process if the input is not '0' and not empty
+        if current_input_num != '0' and current_input_num != '':
+            # Convert to float and divide by 100 to get percentage
+            new_num: float = float(current_input_num) / 100
+            # Update the input field with the new percentage value, properly formatted
+            self.input_num.set(normalize_numeric_type(new_num))
+
+    def math_operation(self, operator: Literal['+', '-', '*', '/']) -> None:
+        """
+        Process a mathematical operation and update the calculator's state.
+
+        This method handles the logic when a mathematical operator (+, -, *, /) is pressed.
+        It updates the current formula and prepares the calculator for the next input.
+
+        Parameters:
+        operator (Literal['+', '-', '*', '/']): The mathematical operator that was pressed.
+
+        Returns:
+        None
+
+        Behavior:
+        - If there's no current formula or the last action was '=', start a new operation.
+        - If the formula ends with an operator and there's no new input, replace the last operator.
+        - Otherwise, append the new number and operator to the existing formula.
+        """
+        # Get the last input number without formatting
+        last_input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
+        # Get the current formula from the result display
+        current_formula: str = self.result_var.get()
+
+        # Check if the formula ends with an operator
+        formula_ends_with_operator: bool = bool(current_formula) and current_formula[-1] in MATH_OPERATIONS
+
+        # Check if we're overwriting the last operator (no new number input)
+        overwrote_operator: bool = formula_ends_with_operator and last_input_num == ''
+
+        # Handle different scenarios
+        if not current_formula or self.last_action_was_equal:
+            # Start a new operation
+            final_result = last_input_num + SPACE + operator
+            self.last_action_was_equal = False
+        elif overwrote_operator:
+            # Replace the last operator
+            final_result = current_formula[:-1] + operator
+        else:
+            # Append new number and operator to existing formula
+            final_result = current_formula + SPACE + last_input_num + SPACE + operator
+
+        # Clear the input field
         self.input_num.set(value='')
+        # Update the result display with the new formula
         self.result_var.set(value=final_result)
 
-    def equal(self):
-        input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
-        result_num: str = self.result_var.get()
+    def evaluate_expression(self) -> None:
+        """
+        Evaluate the current mathematical expression and update the calculator's state.
 
-        if input_num and not self.start_from_beginning:
-            the_formula = result_num + ' ' + input_num
-            result = eval(the_formula)
+        This method handles the following scenarios:
+        1. If the last action was '=', it sets the result to the last input number.
+        2. If there's no new input, it does nothing.
+        3. Otherwise, it evaluates the full expression and updates the display.
 
+        The method also handles errors such as division by zero, disabling buttons
+        (except AC) when an error occurs.
+
+        Returns:
+        None
+        """
+        # Get the last input number without formatting
+        last_input_number: str = humanize_int_numbers(self.input_num.get(), reverse=True)
+        # Get the previous formula from the result display
+        prev_formula: str = self.result_var.get()
+
+        if self.last_action_was_equal:
+            # If the last action was '=', set the result to the last input number
+            self.result_var.set(value=last_input_number)
+        elif not last_input_number:
+            # If there's no new input, do nothing
+            return
+
+        else:
+            # Combine previous formula with the last input number
+            final_formula = prev_formula + SPACE + last_input_number
+            try:
+                # Attempt to evaluate the formula
+                result = eval(final_formula)
+            except (SyntaxError, ZeroDivisionError):
+                # Handle division by zero or syntax errors
+                self.result_var.set("Cannot divide by zero")
+                self.change_buttons_state(disabled=True)
+                return
+
+            # Format and display the result
             self.input_num.set(value=humanize_int_numbers(normalize_numeric_type(round(result, 3))))
-            self.result_var.set(value=the_formula)
-            self.start_from_beginning = True
-        elif self.start_from_beginning:
-            self.result_var.set(value=input_num)
+            # Update the result display with the full formula
+            self.result_var.set(value=final_formula)
+            # Mark that the last action was '='
+            self.last_action_was_equal = True
+
+    def change_buttons_state(self, disabled: bool = True) -> None:
+        """
+        Change the state of all calculator buttons except the 'AC' button.
+
+        Args:
+        disabled (bool): If True, disable buttons; if False, enable buttons.
+
+        Returns:
+        None
+        """
+        for widget in self.winfo_children():
+            if widget.cget('text') != 'AC':
+                widget.configure(state='disabled' if disabled else 'normal')
+                self.buttons_disabled = True
 
 
 # is_dark = darkdetect.isDark()

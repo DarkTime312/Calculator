@@ -44,6 +44,7 @@ class Button(ctk.CTkButton):
                   pady=STYLING['gap'],
                   sticky='news')
 
+
 class MathButton(ctk.CTkButton):
     def __init__(self, parent, sign, **kwargs):
         super().__init__(master=parent,
