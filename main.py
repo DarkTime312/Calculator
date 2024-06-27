@@ -1,23 +1,70 @@
 import customtkinter as ctk
 from settings import *
 from buttons import NumButton, Button, MathButton
+import darkdetect
 
 
-def float_check(num: float | str) -> int | float:
+def normalize_numeric_type(num: int | float) -> str:
+    """
+    Converts a numeric value to its string representation, removing unnecessary decimal points.
+
+    This function takes an integer or float as input and returns a string representation.
+    If the input is a float that represents a whole number (e.g., 5.0), it removes the decimal point and trailing zero.
+
+    Parameters:
+    num (int | float): The number to be normalized.
+
+    Returns:
+    str: A string representation of the number. For whole numbers, it returns the integer representation without decimal point.
+
+    Examples:
+    >>> normalize_numeric_type(5.0)
+    '5'
+    >>> normalize_numeric_type(5.5)
+    '5.5'
+    >>> normalize_numeric_type(10)
+    '10'
+    """
     number_as_string = str(num)
-    if number_as_string.endswith('.0') or '.' not in number_as_string:
-        print(number_as_string)
-        return int(number_as_string.removesuffix('.0'))
-    # elif number_as_string.endswith('.'):
+    if number_as_string.endswith('.0'):
+        return number_as_string.removesuffix('.0')
 
-    return float(number_as_string)
+    return number_as_string
 
 
-def humanize_numbers(text: str, reverse=False):
-    if not reverse and '.' not in text:
-        return f'{float_check(text):,}'
-    else:
-        return text.replace(',', '')
+def humanize_int_numbers(str_num: str, reverse=False) -> str:
+    """
+    Format or unformat integer strings by adding or removing thousands separators.
+
+    This function handles both humanization (adding commas as thousands separators)
+    and dehumanization (removing commas) of integer strings. It leaves float strings unchanged.
+
+    Parameters:
+    str_num (str): The string representation of the number to be processed.
+    reverse (bool, optional): If False (default), humanizes the number by adding commas.
+                              If True, dehumanizes by removing commas.
+
+    Returns:
+    str: The processed string representation of the number.
+
+    Examples:
+    >>> humanize_int_numbers("1000000")
+    '1,000,000'
+    >>> humanize_int_numbers("1,000,000", reverse=True)
+    '1000000'
+    >>> humanize_int_numbers("1000.5")
+    '1000.5'
+    >>> humanize_int_numbers("1,000.5", reverse=True)
+    '1,000.5'
+    """
+    # If it's a float, return it unchanged
+    if '.' in str_num:
+        return str_num
+    else:  # If it's an integer
+        if reverse:  # Dehumanize: remove commas
+            return str_num.replace(',', '')
+        else:  # Humanize: add commas
+            return f'{int(str_num):,}'
 
 
 class Calculator(ctk.CTk):
@@ -90,14 +137,14 @@ class Calculator(ctk.CTk):
         self.equal = MathButton(self, '=', command=self.equal)
 
     def press_num(self, pressed_num):
-        current_num = humanize_numbers(self.input_num.get(), reverse=True)
+        current_num = humanize_int_numbers(self.input_num.get(), reverse=True)
         if current_num == '0' and pressed_num != '.':
             current_num = ''
         elif pressed_num == '.' and ('.' in current_num or current_num == ''):
             return
 
         new_num = current_num + pressed_num
-        self.input_num.set(humanize_numbers(new_num))
+        self.input_num.set(humanize_int_numbers(new_num))
 
     def clear(self):
         self.input_num.set('0')
@@ -115,13 +162,13 @@ class Calculator(ctk.CTk):
             self.input_num.set(new_num)
 
     def convert_to_percent(self):
-        current_num: str = humanize_numbers(self.input_num.get(), reverse=True)
+        current_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
         if current_num != '0':
             new_num: float = float(current_num) / 100
             self.input_num.set(str(new_num))
 
     def math_operation(self, operator):
-        input_num: str = humanize_numbers(self.input_num.get(), reverse=True)
+        input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
         result_num: str = self.result_var.get()
         if not result_num or self.start_from_beginning:  # first time
             final_result = str(input_num) + ' ' + str(operator)
@@ -134,19 +181,20 @@ class Calculator(ctk.CTk):
         self.result_var.set(value=final_result)
 
     def equal(self):
-        input_num: str = humanize_numbers(self.input_num.get(), reverse=True)
+        input_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
         result_num: str = self.result_var.get()
 
         if input_num and not self.start_from_beginning:
             the_formula = result_num + ' ' + input_num
             result = eval(the_formula)
 
-            self.input_num.set(value=humanize_numbers(str(float_check(round(result, 3)))))
+            self.input_num.set(value=humanize_int_numbers(normalize_numeric_type(round(result, 3))))
             self.result_var.set(value=the_formula)
             self.start_from_beginning = True
         elif self.start_from_beginning:
             self.result_var.set(value=input_num)
 
 
-app = Calculator(is_dark=False)
+# is_dark = darkdetect.isDark()
+app = Calculator(is_dark=True)
 app.mainloop()
