@@ -136,30 +136,88 @@ class Calculator(ctk.CTk):
         self.plus = MathButton(self, '+', command=lambda: self.math_operation('+'))
         self.equal = MathButton(self, '=', command=self.equal)
 
-    def press_num(self, pressed_num):
-        current_num = humanize_int_numbers(self.input_num.get(), reverse=True)
-        if current_num == '0' and pressed_num != '.':
-            current_num = ''
-        elif pressed_num == '.' and ('.' in current_num or current_num == ''):
-            return
+    def press_num(self, pressed_num: str) -> None:
+        """
+        Process a number or decimal point pressed on the calculator.
 
+        This method handles the logic for adding a digit or decimal point
+        to the current number displayed in the calculator's input field.
+
+        Parameters:
+        pressed_num (str): The digit or decimal point that was pressed.
+
+        Returns:
+        None
+
+        Behavior:
+        - If a decimal point is pressed when one already exists or the input is empty, it's ignored.
+        - If '0' is the current input and a non-decimal digit is pressed, the '0' is replaced.
+        - In all other cases, the pressed number is appended to the current input.
+        - The input is always displayed with proper thousands separators.
+        """
+        # Remove formatting from the current number for processing
+        current_num = humanize_int_numbers(self.input_num.get(), reverse=True)
+
+        # Check for existing decimal point and empty input
+        already_has_decimal: bool = '.' in current_num
+        input_is_empty: bool = current_num == ''
+
+        # Handle special cases for decimal point
+        if pressed_num == '.' and (already_has_decimal or input_is_empty):
+            return  # Ignore additional decimal points or decimal at start
+        elif current_num == '0' and pressed_num != '.':
+            current_num = ''  # Replace leading zero with new digit
+
+        # Append the pressed number to the current number
         new_num = current_num + pressed_num
+
+        # Update the input field with the new number, properly formatted
         self.input_num.set(humanize_int_numbers(new_num))
 
-    def clear(self):
+    def clear(self) -> None:
+        """
+        Clear the calculator's current input and result display.
+
+        This method performs the following actions:
+        1. Resets the input field to '0'.
+        2. Clears the result display.
+
+        This effectively resets the calculator's visible state,
+        preparing it for a new calculation.
+        """
+        # Reset the input field to '0'
         self.input_num.set('0')
+        # Clear the result display
         self.result_var.set('')
 
-    def change_sign(self):
-        current_num: str = self.input_num.get()
-        is_negative: bool = '-' in current_num
+    def change_sign(self) -> None:
+        """
+        Toggle the sign of the current number in the input field.
 
-        if is_negative:
+        This method changes the sign of the number currently displayed
+        in the calculator's input field. It performs the following actions:
+        1. If the number is positive, it adds a minus sign.
+        2. If the number is negative, it removes the minus sign.
+        3. If the number is zero, it does nothing.
+        """
+        # Get the current number from the input field
+        current_num: str = self.input_num.get()
+
+        # Check if the number is already negative
+        already_is_negative: bool = '-' in current_num
+
+        if already_is_negative:
+            # If negative, remove the minus sign
             new_num = current_num.removeprefix('-')
-            self.input_num.set(new_num)
         elif current_num != '0':
+            # If positive and not zero, add a minus sign
             new_num = '-' + current_num
-            self.input_num.set(new_num)
+        else:
+            # If the number is 0, do nothing and exit the function
+            return
+
+        # Update the input field with the new number
+        self.input_num.set(new_num)
 
     def convert_to_percent(self):
         current_num: str = humanize_int_numbers(self.input_num.get(), reverse=True)
