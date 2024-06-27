@@ -3,6 +3,42 @@ from settings import *
 from buttons import NumButton, Button, MathButton
 
 
+def float_check(num: float) -> str:
+    """
+    Convert a float to a string, removing the decimal point and zero if it's a whole number.
+
+    This function takes a float number and returns its string representation. If the
+    float is effectively a whole number (i.e., it ends with '.0'), the function
+    removes the decimal point and the trailing zero.
+
+    Parameters:
+    num (float): The float number to be converted and checked.
+
+    Returns:
+    str: A string representation of the input number.
+         - If the input is a whole number (e.g., 5.0), it returns the number without the decimal point (e.g., '5').
+         - If the input has decimal places (e.g., 5.5), it returns the full float as a string (e.g., '5.5').
+
+    Examples:
+    >>> float_check(5.0)
+    '5'
+    >>> float_check(5.5)
+    '5.5'
+    >>> float_check(100.0)
+    '100'
+    >>> float_check(3.14159)
+    '3.14159'
+
+    Note:
+    This function does not round the number; it merely changes its string representation.
+    The precision of the original float is maintained in the output string.
+    """
+    number_as_string = str(num)
+    if number_as_string.endswith('.0'):
+        return number_as_string.removesuffix('.0')
+    return number_as_string
+
+
 class Calculator(ctk.CTk):
     def __init__(self, is_dark):
         super().__init__(fg_color=BLACK if is_dark else WHITE)
@@ -12,6 +48,7 @@ class Calculator(ctk.CTk):
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
         self.iconbitmap('empty.ico')
+        self.start_from_begining = False
 
         self.window_layout()
         # vars
@@ -69,10 +106,9 @@ class Calculator(ctk.CTk):
         current_num = self.input_num.get()
         if current_num == '0' and pressed_num != '.':
             current_num = ''
-        # if current_num == '0' and pressed_num == '.':
-        #     current_num = ''
-        elif pressed_num == '.' and '.' in current_num:
+        elif pressed_num == '.' and ('.' in current_num or current_num == ''):
             return
+
         new_num = current_num + pressed_num
         self.input_num.set(new_num)
 
@@ -86,10 +122,10 @@ class Calculator(ctk.CTk):
 
         if is_negative:
             new_num = current_num.removeprefix('-')
-        else:
+            self.input_num.set(new_num)
+        elif current_num != '0':
             new_num = '-' + current_num
-
-        self.input_num.set(new_num)
+            self.input_num.set(new_num)
 
     def convert_to_percent(self):
         current_num: str = self.input_num.get()
@@ -99,26 +135,32 @@ class Calculator(ctk.CTk):
 
     def math_operation(self, operator):
         input_num: str = self.input_num.get()
-        self.input_num.set(value='')
         result_num: str = self.result_var.get()
-        if not result_num:  # first time
+        if not result_num or self.start_from_begining:  # first time
             final_result = str(input_num) + ' ' + str(operator)
-            print(final_result)
+            self.start_from_begining = False
+        elif result_num[-1] in set('+-*/') and input_num == '':
+            final_result = result_num[:-1] + operator
         else:  # other times
             final_result = str(result_num) + ' ' + str(input_num) + ' ' + str(operator)
-            print(final_result)
-
+        self.input_num.set(value='')
         self.result_var.set(value=final_result)
 
     def equal(self):
         input_num: str = self.input_num.get()
-        if input_num:
-            result_num: str = self.result_var.get()
-            result = eval(result_num + input_num)
-            self.input_num.set(value=round(result, 3))
-            self.result_var.set(value='')
-        else:
-            print(input_num)
+        result_num: str = self.result_var.get()
+
+        if input_num and not self.start_from_begining:
+            the_formula = result_num + ' ' + input_num
+            result = eval(the_formula)
+
+            self.input_num.set(value=float_check(round(result, 3)))
+            self.result_var.set(value=the_formula)
+            self.start_from_begining = True
+        elif self.start_from_begining:
+            self.result_var.set(value=input_num)
+
+
 
 
 class OutputLabel(ctk.CTkLabel):
