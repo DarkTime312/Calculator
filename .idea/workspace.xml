@@ -34,6 +34,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Doctest float_check.executor": "Run",
     "Python tests.Doctests in main (1).executor": "Run",
     "Python tests.Doctests in main (2).executor": "Run",
     "Python tests.Doctests in main (3).executor": "Run",
@@ -53,7 +54,26 @@
       <recent name="C:\Users\Mohammad\Documents\Mnitors\My_script\calculator" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Doctests in main (1)">
+  <component name="RunManager" selected="Python tests.Doctests in main (2)">
+    <configuration name="Doctest float_check" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+      <module name="calculator" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="float_check" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_FUNCTION" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="Doctests in main (1)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
@@ -73,26 +93,7 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Doctests in main (3)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
-      <module name="calculator" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Doctests in main (4)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+    <configuration name="Doctests in main (2)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Doctests in main (2)" />
         <item itemvalue="Python tests.Doctests in main (1)" />
         <item itemvalue="Python tests.Doctests in main" />
+        <item itemvalue="Python tests.Doctest float_check" />
         <item itemvalue="Python tests.Doctests in main (5)" />
-        <item itemvalue="Python tests.Doctests in main (4)" />
-        <item itemvalue="Python tests.Doctests in main (3)" />
       </list>
     </recent_temporary>
   </component>
@@ -199,13 +200,22 @@
       <option name="project" value="LOCAL" />
       <updated>1719490702847</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="0.6">
+      <option name="closed" value="true" />
+      <created>1719504332754</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719504332754</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="0" />
     <MESSAGE value="0.1" />
     <MESSAGE value="0.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="0.5" />
+    <MESSAGE value="0.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.6" />
   </component>
 </project>

@@ -3,40 +3,21 @@ from settings import *
 from buttons import NumButton, Button, MathButton
 
 
-def float_check(num: float) -> str:
-    """
-    Convert a float to a string, removing the decimal point and zero if it's a whole number.
-
-    This function takes a float number and returns its string representation. If the
-    float is effectively a whole number (i.e., it ends with '.0'), the function
-    removes the decimal point and the trailing zero.
-
-    Parameters:
-    num (float): The float number to be converted and checked.
-
-    Returns:
-    str: A string representation of the input number.
-         - If the input is a whole number (e.g., 5.0), it returns the number without the decimal point (e.g., '5').
-         - If the input has decimal places (e.g., 5.5), it returns the full float as a string (e.g., '5.5').
-
-    Examples:
-    >>> float_check(5.0)
-    '5'
-    >>> float_check(5.5)
-    '5.5'
-    >>> float_check(100.0)
-    '100'
-    >>> float_check(3.14159)
-    '3.14159'
-
-    Note:
-    This function does not round the number; it merely changes its string representation.
-    The precision of the original float is maintained in the output string.
-    """
+def float_check(num: float | str) -> int | float:
     number_as_string = str(num)
-    if number_as_string.endswith('.0'):
-        return number_as_string.removesuffix('.0')
-    return number_as_string
+    if number_as_string.endswith('.0') or '.' not in number_as_string:
+        print(number_as_string)
+        return int(number_as_string.removesuffix('.0'))
+    # elif number_as_string.endswith('.'):
+
+    return float(number_as_string)
+
+
+def humanize_numbers(text: str, reverse=False):
+    if not reverse and '.' not in text:
+        return f'{float_check(text):,}'
+    else:
+        return text.replace(',', '')
 
 
 class Calculator(ctk.CTk):
@@ -48,7 +29,7 @@ class Calculator(ctk.CTk):
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
         self.iconbitmap('empty.ico')
-        self.start_from_begining = False
+        self.start_from_beginning = False
 
         self.window_layout()
         # vars
@@ -71,10 +52,16 @@ class Calculator(ctk.CTk):
         font = ctk.CTkFont(family=FONT, size=NORMAL_FONT_SIZE)
         font_large = ctk.CTkFont(family=FONT, size=OUTPUT_FONT_SIZE)
 
-        self.top_output_label = OutputLabel(self, text='6 +', font=font, textvariable=self.result_var)
+        self.top_output_label = ctk.CTkLabel(self,
+                                            font=font,
+                                            textvariable=self.result_var,
+                                            text_color=WHITE if self.is_dark else BLACK)
         self.top_output_label.grid(row=0, column=0, columnspan=4, sticky='se', padx=10)
 
-        self.input_label = OutputLabel(self, font=font_large, textvariable=self.input_num)
+        self.input_label = ctk.CTkLabel(self,
+                                        font=font_large,
+                                        textvariable=self.input_num,
+                                        text_color=WHITE if self.is_dark else BLACK)
         self.input_label.grid(row=1, column=0, columnspan=4, sticky='e', padx=10)
 
         # Create number buttons
@@ -103,14 +90,14 @@ class Calculator(ctk.CTk):
         self.equal = MathButton(self, '=', command=self.equal)
 
     def press_num(self, pressed_num):
-        current_num = self.input_num.get()
+        current_num = humanize_numbers(self.input_num.get(), reverse=True)
         if current_num == '0' and pressed_num != '.':
             current_num = ''
         elif pressed_num == '.' and ('.' in current_num or current_num == ''):
             return
 
         new_num = current_num + pressed_num
-        self.input_num.set(new_num)
+        self.input_num.set(humanize_numbers(new_num))
 
     def clear(self):
         self.input_num.set('0')
@@ -128,17 +115,17 @@ class Calculator(ctk.CTk):
             self.input_num.set(new_num)
 
     def convert_to_percent(self):
-        current_num: str = self.input_num.get()
+        current_num: str = humanize_numbers(self.input_num.get(), reverse=True)
         if current_num != '0':
             new_num: float = float(current_num) / 100
             self.input_num.set(str(new_num))
 
     def math_operation(self, operator):
-        input_num: str = self.input_num.get()
+        input_num: str = humanize_numbers(self.input_num.get(), reverse=True)
         result_num: str = self.result_var.get()
-        if not result_num or self.start_from_begining:  # first time
+        if not result_num or self.start_from_beginning:  # first time
             final_result = str(input_num) + ' ' + str(operator)
-            self.start_from_begining = False
+            self.start_from_beginning = False
         elif result_num[-1] in set('+-*/') and input_num == '':
             final_result = result_num[:-1] + operator
         else:  # other times
@@ -147,26 +134,19 @@ class Calculator(ctk.CTk):
         self.result_var.set(value=final_result)
 
     def equal(self):
-        input_num: str = self.input_num.get()
+        input_num: str = humanize_numbers(self.input_num.get(), reverse=True)
         result_num: str = self.result_var.get()
 
-        if input_num and not self.start_from_begining:
+        if input_num and not self.start_from_beginning:
             the_formula = result_num + ' ' + input_num
             result = eval(the_formula)
 
-            self.input_num.set(value=float_check(round(result, 3)))
+            self.input_num.set(value=humanize_numbers(str(float_check(round(result, 3)))))
             self.result_var.set(value=the_formula)
-            self.start_from_begining = True
-        elif self.start_from_begining:
+            self.start_from_beginning = True
+        elif self.start_from_beginning:
             self.result_var.set(value=input_num)
 
 
-
-
-class OutputLabel(ctk.CTkLabel):
-    def __init__(self, parent, **kwargs):
-        super().__init__(master=parent, text_color=WHITE if parent.is_dark else BLACK, **kwargs)
-
-
-app = Calculator(is_dark=True)
+app = Calculator(is_dark=False)
 app.mainloop()
