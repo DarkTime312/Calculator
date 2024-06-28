@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76e9da74-ce85-4f5b-8801-ff89e3a6c306" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/calculator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/calculator.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,34 +33,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Doctest float_check.executor": "Run",
-    "Python tests.Doctest humanize_int_numbers.executor": "Run",
-    "Python tests.Doctest normalize_numeric_type.executor": "Run",
-    "Python tests.Doctests in main (1).executor": "Run",
-    "Python tests.Doctests in main (2).executor": "Run",
-    "Python tests.Doctests in main (3).executor": "Run",
-    "Python tests.Doctests in main (4).executor": "Run",
-    "Python tests.Doctests in main (5).executor": "Run",
-    "Python tests.Doctests in main.executor": "Run",
-    "Python.buttons.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.remove.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Mohammad/Documents/Mnitors/My_script/calculator",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Doctest float_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctest humanize_int_numbers.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctest normalize_numeric_type.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main (5).executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.buttons.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.remove.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mohammad/Documents/Mnitors/My_script/calculator&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mohammad\Documents\Mnitors\My_script\calculator" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Doctests in main">
-    <configuration name="Doctests in main (1)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Doctests in main (4)">
+    <configuration name="Doctest normalize_numeric_type" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+      <module name="calculator" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="normalize_numeric_type" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_FUNCTION" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Doctests in main (2)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,25 +136,6 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Doctests in main (5)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
-      <module name="calculator" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
-    </configuration>
     <configuration name="Doctests in main" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
@@ -158,11 +157,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Doctests in main" />
-        <item itemvalue="Python tests.Doctests in main (1)" />
-        <item itemvalue="Python tests.Doctests in main (5)" />
         <item itemvalue="Python tests.Doctests in main (4)" />
+        <item itemvalue="Python tests.Doctest normalize_numeric_type" />
         <item itemvalue="Python tests.Doctests in main (3)" />
+        <item itemvalue="Python tests.Doctests in main (2)" />
+        <item itemvalue="Python tests.Doctests in main" />
       </list>
     </recent_temporary>
   </component>
@@ -254,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719524418675</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="0.8.5">
+      <option name="closed" value="true" />
+      <created>1719584093865</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719584093865</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -267,6 +274,7 @@
     <MESSAGE value="0.7.2" />
     <MESSAGE value="0.8" />
     <MESSAGE value="0.8.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="0.8.1" />
+    <MESSAGE value="0.8.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.8.5" />
   </component>
 </project>
