@@ -77,6 +77,8 @@ class Calculator(ctk.CTk):
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
         self.iconbitmap('empty.ico')
+        self.resizable(False, False)
+        self.new_size = OUTPUT_FONT_SIZE
 
         self.last_action_was_equal = False
         self.buttons_disabled = False
@@ -88,6 +90,7 @@ class Calculator(ctk.CTk):
         self.result_var = ctk.StringVar(value='')
 
         self.create_widgets()
+        # print(get_text_width('100,000,000', font_name=FONT, font_size=OUTPUT_FONT_SIZE))
 
     def window_layout(self) -> None:
         """
@@ -171,7 +174,8 @@ class Calculator(ctk.CTk):
 
         # Append the pressed number to the current number
         new_num = current_num + pressed_num
-
+        # Adjust the font size so the text fit
+        self.adjust_display_font(input_text=new_num)
         # Update the input field with the new number, properly formatted
         self.input_num.set(humanize_int_numbers(new_num))
 
@@ -198,6 +202,8 @@ class Calculator(ctk.CTk):
         self.input_num.set('0')
         # Clear the result display
         self.result_var.set('')
+        # Change the font size to default size
+        self.input_label.configure(font=(FONT, OUTPUT_FONT_SIZE))
 
     def change_sign(self) -> None:
         """
@@ -292,6 +298,8 @@ class Calculator(ctk.CTk):
 
         # Clear the input field
         self.input_num.set(value='')
+        # Adjust the font size so the text fit
+        self.adjust_display_font(result_text=final_result)
         # Update the result display with the new formula
         self.result_var.set(value=final_result)
 
@@ -335,7 +343,12 @@ class Calculator(ctk.CTk):
                 return
 
             # Format and display the result
-            self.input_num.set(value=humanize_int_numbers(normalize_numeric_type(round(result, 3))))
+            rounded_and_normalized = normalize_numeric_type(round(result, 3))
+            self.adjust_display_font(input_text=rounded_and_normalized)
+
+            self.input_num.set(value=humanize_int_numbers(rounded_and_normalized))
+            # Adjust the font size so the text fit
+            self.adjust_display_font(result_text=final_formula)
             # Update the result display with the full formula
             self.result_var.set(value=final_formula)
             # Mark that the last action was '='
@@ -356,7 +369,51 @@ class Calculator(ctk.CTk):
                 widget.configure(state='disabled' if disabled else 'normal')
                 self.buttons_disabled = True
 
+    def adjust_display_font(self, *,
+                            input_text: str | None = None,
+                            result_text: str | None = None) -> None:
+        """
+        Adjust the font size of the input and result displays based on the length of the text.
 
-# is_dark = darkdetect.isDark()
-app = Calculator(is_dark=True)
+        This method dynamically resizes the font to ensure that long numbers or expressions
+        fit within the display area. It handles both the input display and the result display separately.
+
+        Parameters:
+        input_text (str | None): The text to be displayed in the input field. If None, input display is not adjusted.
+        result_text (str | None): The text to be displayed in the result field. If None, result display is not adjusted.
+
+        Returns:
+        None
+
+        Behavior:
+        - For the input display:
+          - Starts reducing font size when text length exceeds INPUT_LENGTH_THRESHOLD
+          - Reduces font size by 15 points for every 3 characters over the threshold
+          - Minimum font size is OUTPUT_FONT_SIZE - INPUT_FONT_REDUCTION
+        - For the result display:
+          - Starts reducing font size when text length exceeds RESULT_LENGTH_THRESHOLD
+          - Reduces font size by 10 points for every 3 characters over the threshold
+          - Minimum font size is NORMAL_FONT_SIZE - RESULT_FONT_REDUCTION
+        """
+        # Adjust input display font size
+        if input_text:
+            # Calculate new font size based on input text length
+            new_size = OUTPUT_FONT_SIZE - (max(0, len(input_text) - INPUT_LENGTH_THRESHOLD) // 3) * 15
+            # Ensure font size doesn't go below the minimum
+            new_size = max(new_size, OUTPUT_FONT_SIZE - INPUT_FONT_REDUCTION)
+            # Apply new font size to input label
+            self.input_label.configure(font=(FONT, new_size))
+
+        # Adjust result display font size
+        if result_text:
+            # Calculate new font size based on result text length
+            new_size = NORMAL_FONT_SIZE - (max(0, len(result_text) - RESULT_LENGTH_THRESHOLD) // 3) * 10
+            # Ensure font size doesn't go below the minimum
+            new_size = max(new_size, NORMAL_FONT_SIZE - RESULT_FONT_REDUCTION)
+            # Apply new font size to result label
+            self.top_output_label.configure(font=(FONT, int(new_size)))
+
+
+is_dark = darkdetect.isDark()
+app = Calculator(is_dark)
 app.mainloop()
