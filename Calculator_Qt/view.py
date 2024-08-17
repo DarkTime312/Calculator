@@ -1,26 +1,14 @@
-import sys
 from typing import Literal
 from functools import partial
+from typing import Literal
 
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QWidget, QApplication, QPushButton
+from PySide6.QtWidgets import QWidget, QPushButton
 from hPyT import *
 
 from Calculator_dark_ui import Ui_CalculatorDarkView
 from Calculator_light_ui import Ui_CalculatorLightView
-
-# Constants
-FONT = 'Helvetica'
-OUTPUT_FONT_SIZE = 50
-NORMAL_FONT_SIZE = 25
-
-INPUT_LENGTH_THRESHOLD = 6
-RESULT_LENGTH_THRESHOLD = 20
-INPUT_FONT_REDUCTION = 30
-RESULT_FONT_REDUCTION = 10
-
-MATH_OPERATIONS = '+-*/'
-SPACE = ' '
+from enums import *
 
 
 def humanize_int_numbers(str_num: str, reverse=False) -> str:
@@ -48,8 +36,8 @@ def humanize_int_numbers(str_num: str, reverse=False) -> str:
     >>> humanize_int_numbers("1,000.5", reverse=True)
     '1,000.5'
     """
-    # If it's a float, return it unchanged
-    if '.' in str_num:
+    # If it's a float or empty string, return it unchanged
+    if '.' in str_num or not str_num or str_num == '0':
         return str_num
     else:  # If it's an integer
         if reverse:  # Dehumanize: remove commas
@@ -93,7 +81,6 @@ class CalculatorView(QWidget):
         self.apply_theme(theme)
         self.setWindowTitle(' ')
         self.buttons_disabled = False  # state of buttons
-        self.last_action_was_equal = False
 
         self.connect_events()
 
@@ -124,18 +111,13 @@ class CalculatorView(QWidget):
         """
         for btn in self.findChildren(QPushButton):
             btn_text = btn.text()
-            if btn_text in '0123456789':
+            if btn_text in set('0123456789'):
                 btn.clicked.connect(partial(self.press_num, btn_text))
 
         self.ui.btn_dot.clicked.connect(partial(self.press_num, '.'))
         self.ui.btn_ac.clicked.connect(self.reset_view)
         self.ui.btn_change_sign.clicked.connect(self.switch_sign)
         self.ui.btn_percent.clicked.connect(self.convert_to_percent)
-        self.ui.btn_plus.clicked.connect(partial(self.math_operation, '+'))
-        self.ui.btn_minus.clicked.connect(partial(self.math_operation, '-'))
-        self.ui.btn_multiply.clicked.connect(partial(self.math_operation, '*'))
-        self.ui.btn_divide.clicked.connect(partial(self.math_operation, '/'))
-        self.ui.btn_equal.clicked.connect(self.evaluate_expression)
 
     def adjust_display_font(self, *,
                             input_text: str | None = None,
@@ -182,15 +164,28 @@ class CalculatorView(QWidget):
             self.ui.lbl_small.setFont(QFont(FONT, int(new_size)))
 
     def get_input_text(self) -> str:
-        return self.ui.lbl_big.text()
+        current_text = self.ui.lbl_big.text()
+        return humanize_int_numbers(current_text, reverse=True)
 
-    def set_input_text(self, number: str | float):
-        if isinstance(number, float):
+    def set_input_text(self, number: str | float, adjust_font_size: bool = True):
+        if isinstance(number, (int, float)):
             number: str = normalize_numeric_type(number)
 
-        # Adjust font size for input text
-        self.adjust_display_font(input_text=number)
+        if adjust_font_size:
+            # Adjust font size for input text
+            self.adjust_display_font(input_text=number)
         self.ui.lbl_big.setText(humanize_int_numbers(number))
+
+    def get_formula_text(self) -> str:
+        return self.ui.lbl_small.text()
+
+    def set_formula_text(self, formula: str):
+        if formula == 'Cannot divide by zero':
+            pass
+        else:
+            self.adjust_display_font(result_text=formula)
+
+        self.ui.lbl_small.setText(formula)
 
     def press_num(self, pressed_num: str) -> None:
         """
@@ -212,7 +207,7 @@ class CalculatorView(QWidget):
         - The input is always displayed with proper thousands separators.
         """
         # Remove formatting from the current number for processing
-        current_num: str = humanize_int_numbers(self.ui.lbl_big.text(), reverse=True)
+        current_num: str = self.get_input_text()
 
         # Check for existing decimal point and empty input
         already_has_decimal: bool = '.' in current_num
@@ -226,126 +221,19 @@ class CalculatorView(QWidget):
 
         # Append the pressed number to the current number
         new_num: str = current_num + pressed_num
-        # Adjust the font size so the text fit
-        self.adjust_display_font(input_text=new_num)
         # Update the input field with the new number, properly formatted
-        self.ui.lbl_big.setText(humanize_int_numbers(new_num))
-
-    def math_operation(self, operator: Literal['+', '-', '*', '/']) -> None:
-        """
-        Process a mathematical operation and update the calculator's state.
-
-        This method handles the logic when a mathematical operator (+, -, *, /) is pressed.
-        It updates the current formula and prepares the calculator for the next input.
-
-        Parameters:
-        operator (Literal['+', '-', '*', '/']): The mathematical operator that was pressed.
-
-        Returns:
-        None
-
-        Behavior:
-        - If there's no current formula or the last action was '=', start a new operation.
-        - If the formula ends with an operator and there's no new input, replace the last operator.
-        - Otherwise, append the new number and operator to the existing formula.
-        """
-        # Get the last input number without formatting
-        last_input_num: str = humanize_int_numbers(self.ui.lbl_big.text(), reverse=True)
-        # Get the current formula from the result display
-        current_formula: str = self.ui.lbl_small.text()
-
-        # Don't do anything if at the start
-        # user presses math button without any input
-        if last_input_num == '0' and not current_formula:
-            return
-
-        # Check if the formula ends with an operator
-        formula_ends_with_operator: bool = bool(current_formula) and current_formula[-1] in MATH_OPERATIONS
-
-        # Check if we're overwriting the last operator (no new number input)
-        overwrote_operator: bool = formula_ends_with_operator and last_input_num == ''
-
-        # Handle different scenarios
-        if not current_formula or self.last_action_was_equal:
-            # Start a new operation
-            final_result: str = last_input_num + SPACE + operator
-            self.last_action_was_equal = False
-        elif overwrote_operator:
-            # Replace the last operator
-            final_result: str = current_formula[:-1] + operator
-        else:
-            # Append new number and operator to existing formula
-            final_result: str = current_formula + SPACE + last_input_num + SPACE + operator
-
-        # Clear the input field
-        self.ui.lbl_big.setText('')
-        # Adjust the font size so the text fit
-        self.adjust_display_font(result_text=final_result)
-        # Update the result display with the new formula
-        self.ui.lbl_small.setText(final_result)
+        self.set_input_text(new_num)
 
     def reset_view(self) -> None:
         if self.buttons_disabled:
             self.change_buttons_state(disabled=False)
         # Reset the input field to '0'
-        self.ui.lbl_big.setText('0')
+        self.set_input_text('0')
         # Clear the result display
-        self.ui.lbl_small.setText('')
+        self.set_formula_text('')
         # Change the font size of the labels back to default size
         self.ui.lbl_big.setFont(QFont(FONT, OUTPUT_FONT_SIZE))
         self.ui.lbl_small.setFont(QFont(FONT, NORMAL_FONT_SIZE))
-
-    def evaluate_expression(self) -> None:
-        """
-        Evaluate the current mathematical expression and update the calculator's state.
-
-        This method handles the following scenarios:
-        1. If the last action was '=', it sets the result to the last input number.
-        2. If there's no new input, it does nothing.
-        3. Otherwise, it evaluates the full expression and updates the display.
-
-        The method also handles errors such as division by zero, disabling buttons
-        (except AC) when an error occurs.
-
-        Returns:
-        None
-        """
-        # Get the last input number without formatting
-        last_input_number: str = humanize_int_numbers(self.ui.lbl_big.text(), reverse=True)
-        # Get the previous formula from the result display
-        prev_formula: str = self.ui.lbl_small.text()
-
-        if self.last_action_was_equal:
-            # If the last action was '=', set the result to the last input number
-            self.ui.lbl_small.setText(last_input_number)
-        elif not last_input_number:
-            # If there's no new input, do nothing
-            return
-
-        else:
-            # Combine previous formula with the last input number
-            final_formula: str = prev_formula + SPACE + last_input_number
-            try:
-                # Attempt to evaluate the formula
-                result: int | float = eval(final_formula)
-            except (SyntaxError, ZeroDivisionError):
-                # Handle division by zero or syntax errors
-                self.ui.lbl_small.setText("Cannot divide by zero")
-                self.change_buttons_state(disabled=True)
-                return
-
-            # Format the result
-            rounded_and_normalized: str = normalize_numeric_type(round(result, 3))
-            # Adjust font size for input text
-            self.adjust_display_font(input_text=rounded_and_normalized)
-            self.ui.lbl_big.setText(humanize_int_numbers(rounded_and_normalized))
-
-            # Adjust the font size for formula text
-            self.adjust_display_font(result_text=final_formula)
-            # Update the result display with the full formula
-            self.ui.lbl_small.setText(final_formula)
-            # Mark that the last action was '='
-            self.last_action_was_equal: bool = True
 
     def change_buttons_state(self, disabled: bool = True) -> None:
         """
@@ -375,23 +263,25 @@ class CalculatorView(QWidget):
         3. If the number is zero, it does nothing.
         """
         # Get the current number from the input field
-        current_num: str = self.ui.lbl_big.text()
+        current_num: str = self.get_input_text()
+        print(repr(current_num))
 
         # Check if the number is already negative
         already_is_negative: bool = current_num.startswith('-')
-
-        if already_is_negative:
-            # If negative, remove the minus sign
-            new_num: str = current_num.removeprefix('-')
-        elif current_num != '0':
-            # If positive and not zero, add a minus sign
-            new_num: str = '-' + current_num
-        else:
+        if current_num == '0' or not current_num:
             # If the number is 0, do nothing and exit the function
             return
 
+        elif already_is_negative:
+            # If negative, remove the minus sign
+            new_num: str = current_num.removeprefix('-')
+
+        else:
+            # If positive and not zero, add a minus sign
+            new_num: str = '-' + current_num
+
         # Update the input field with the new number
-        self.ui.lbl_big.setText(new_num)
+        self.set_input_text(new_num, adjust_font_size=False)
 
     def convert_to_percent(self) -> None:
         """
@@ -405,11 +295,11 @@ class CalculatorView(QWidget):
         The function does nothing if the current input is '0' or an empty string.
         """
         # Remove formatting from the current input number
-        current_input_num: str = humanize_int_numbers(self.ui.lbl_big.text(), reverse=True)
+        current_input_num: str = self.get_input_text()
 
         # Only process if the input is not '0' and not empty
         if current_input_num and current_input_num != '0':
             # Convert to float and divide by 100 to get percentage
             new_num: float = float(current_input_num) / 100
             # Update the input field with the new percentage value, properly formatted
-            self.ui.lbl_big.setText(normalize_numeric_type(new_num))
+            self.set_input_text(new_num)
