@@ -3,6 +3,7 @@ from settings import *
 from buttons import NumButton, Button, MathButton
 from typing import Literal
 import darkdetect
+from hPyT import *
 
 
 def normalize_numeric_type(num: int | float) -> str:
@@ -73,6 +74,7 @@ class Calculator(ctk.CTk):
         super().__init__(fg_color=(WHITE, BLACK))
 
         ctk.set_appearance_mode('dark' if is_dark else 'light')
+
         # window setup
         self.geometry(f'{APP_SIZE[0]}x{APP_SIZE[1]}')
         self.title('')
@@ -416,5 +418,7 @@ class Calculator(ctk.CTk):
 
 
 is_dark = darkdetect.isDark()
-app = Calculator(not is_dark)
+app = Calculator(is_dark)
+title_bar_color.set(app, '#000000' if is_dark else '#eeeeee')  # sets the titlebar text color
+
 app.mainloop()

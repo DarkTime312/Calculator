@@ -97,7 +97,15 @@ class CalculatorView(QWidget):
 
         self.connect_events()
 
-    def apply_theme(self, theme):
+    def apply_theme(self, theme: Literal['light', 'dark']) -> None:
+        """
+        Load dark or light theme.
+
+        Args:
+            theme: [str] - user should pass 'light' or 'dark'.
+
+        Returns: None
+        """
         if theme == 'light':
             self.ui = Ui_CalculatorLightView()
             title_bar_color.set(self, '#f3f3f3')  # sets the titlebar color to white
@@ -107,15 +115,19 @@ class CalculatorView(QWidget):
 
         self.ui.setupUi(self)
 
-    def connect_events(self):
-        # Connect signals to slots
+    def connect_events(self) -> None:
+        """
+        Connect signals to slots.
+
+        Returns:
+            None
+        """
         for btn in self.findChildren(QPushButton):
             btn_text = btn.text()
-            if btn_text in set('0123456789'):
+            if btn_text in '0123456789':
                 btn.clicked.connect(partial(self.press_num, btn_text))
 
         self.ui.btn_dot.clicked.connect(partial(self.press_num, '.'))
-
         self.ui.btn_ac.clicked.connect(self.reset_view)
         self.ui.btn_change_sign.clicked.connect(self.switch_sign)
         self.ui.btn_percent.clicked.connect(self.convert_to_percent)
@@ -168,6 +180,17 @@ class CalculatorView(QWidget):
             new_size = max(new_size, NORMAL_FONT_SIZE - RESULT_FONT_REDUCTION)
             # Apply new font size to result label
             self.ui.lbl_small.setFont(QFont(FONT, int(new_size)))
+
+    def get_input_text(self) -> str:
+        return self.ui.lbl_big.text()
+
+    def set_input_text(self, number: str | float):
+        if isinstance(number, float):
+            number: str = normalize_numeric_type(number)
+
+        # Adjust font size for input text
+        self.adjust_display_font(input_text=number)
+        self.ui.lbl_big.setText(humanize_int_numbers(number))
 
     def press_num(self, pressed_num: str) -> None:
         """
@@ -390,21 +413,3 @@ class CalculatorView(QWidget):
             new_num: float = float(current_input_num) / 100
             # Update the input field with the new percentage value, properly formatted
             self.ui.lbl_big.setText(normalize_numeric_type(new_num))
-
-    # def change_buttons_state(self, disabled: bool = True) -> None:
-    #     """
-    #     Change the state of all calculator buttons except the 'AC' button.
-    #
-    #     Args:
-    #     disabled (bool): If True, disable buttons; if False, enable buttons.
-    #
-    #     Returns:
-    #     None
-    #     """
-    #     new_state: str = 'disabled' if disabled else 'normal'
-    #
-    #     for widget in self.winfo_children():
-    #         if widget.cget('text') != 'AC':
-    #             widget.configure(state=new_state)
-    #
-    #     self.buttons_disabled: bool = disabled

@@ -387,7 +387,7 @@ class Ui_CalculatorDarkView(object):
     def retranslateUi(self, CalculatorDarkView):
         CalculatorDarkView.setWindowTitle("")
         self.lbl_small.setText("")
-        self.lbl_big.setText("")
+        self.lbl_big.setText(QCoreApplication.translate("CalculatorDarkView", u"0", None))
         self.btn_1.setText(QCoreApplication.translate("CalculatorDarkView", u"1", None))
         self.btn_percent.setText(QCoreApplication.translate("CalculatorDarkView", u"%", None))
         self.btn_4.setText(QCoreApplication.translate("CalculatorDarkView", u"4", None))

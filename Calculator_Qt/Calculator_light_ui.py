@@ -381,7 +381,7 @@ class Ui_CalculatorLightView(object):
     def retranslateUi(self, CalculatorLightView):
         CalculatorLightView.setWindowTitle("")
         self.lbl_small.setText("")
-        self.lbl_big.setText("")
+        self.lbl_big.setText(QCoreApplication.translate("CalculatorLightView", u"0", None))
         self.btn_1.setText(QCoreApplication.translate("CalculatorLightView", u"1", None))
         self.btn_percent.setText(QCoreApplication.translate("CalculatorLightView", u"%", None))
         self.btn_4.setText(QCoreApplication.translate("CalculatorLightView", u"4", None))
