@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>Assets/divide_dark.png</file>
+    <file>Assets/divide_light.png</file>
+    <file>Assets/empty.ico</file>
+    <file>Assets/Helvetica.ttf</file>
+    <file>Assets/invert_dark.png</file>
+    <file>Assets/invert_light.png</file>
+  </qresource>
+</RCC>
