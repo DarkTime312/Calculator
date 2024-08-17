@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76e9da74-ce85-4f5b-8801-ff89e3a6c306" name="Changes" comment="Qt version started">
+    <list default="true" id="76e9da74-ce85-4f5b-8801-ff89e3a6c306" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/Calculator_dark.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/Calculator_dark.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/Calculator_dark_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/Calculator_dark_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/Calculator_light.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/Calculator_light.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/Calculator_light_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/Calculator_light_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator_Qt/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator_Qt/view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,28 +52,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Doctest float_check.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctest humanize_int_numbers.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctest normalize_numeric_type.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main (2).executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main (3).executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main (4).executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main (5).executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Doctests in main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.buttons.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.remove.executor&quot;: &quot;Run&quot;,
-    &quot;Python.settings.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Last Windwos(2024)/0 - All the files/Documents/Mnitors/My_script/calculator&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Doctest float_check.executor": "Run",
+    "Python tests.Doctest humanize_int_numbers.executor": "Run",
+    "Python tests.Doctest normalize_numeric_type.executor": "Run",
+    "Python tests.Doctests in main (1).executor": "Run",
+    "Python tests.Doctests in main (2).executor": "Run",
+    "Python tests.Doctests in main (3).executor": "Run",
+    "Python tests.Doctests in main (4).executor": "Run",
+    "Python tests.Doctests in main (5).executor": "Run",
+    "Python tests.Doctests in main.executor": "Run",
+    "Python tests.Doctests in view (1).executor": "Run",
+    "Python tests.Doctests in view.executor": "Run",
+    "Python.buttons.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.remove.executor": "Run",
+    "Python.settings.executor": "Run",
+    "Python.view.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "F:/Last Windwos(2024)/0 - All the files/Documents/Mnitors/My_script/calculator",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mohammad\Documents\Mnitors\My_script\calculator" />
@@ -96,7 +108,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="settings" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="view" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -105,11 +117,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Calculator_Qt" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/settings.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Calculator_Qt/view.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -118,7 +130,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Doctests in main (2)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+    <configuration name="Doctests in main (1)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,17 +149,17 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Doctests in main (3)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+    <configuration name="Doctests in view (1)" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Calculator_Qt" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Calculator_Qt/view.py" />
       <option name="CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="FOLDER_NAME" value="" />
@@ -156,17 +168,17 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Doctests in main" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+    <configuration name="Doctests in view" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <module name="calculator" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Calculator_Qt" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Calculator_Qt/view.py" />
       <option name="CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="FOLDER_NAME" value="" />
@@ -178,10 +190,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python tests.Doctests in main" />
-        <item itemvalue="Python tests.Doctests in main (3)" />
-        <item itemvalue="Python tests.Doctests in main (2)" />
-        <item itemvalue="Python.settings" />
+        <item itemvalue="Python tests.Doctests in main (1)" />
+        <item itemvalue="Python tests.Doctests in view (1)" />
+        <item itemvalue="Python tests.Doctests in view" />
+        <item itemvalue="Python.view" />
       </list>
     </recent_temporary>
   </component>
@@ -289,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719612246477</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Qt version started">
+      <option name="closed" value="true" />
+      <created>1723854963666</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723854963666</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

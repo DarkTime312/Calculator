@@ -416,5 +416,5 @@ class Calculator(ctk.CTk):
 
 
 is_dark = darkdetect.isDark()
-app = Calculator(is_dark)
+app = Calculator(not is_dark)
 app.mainloop()

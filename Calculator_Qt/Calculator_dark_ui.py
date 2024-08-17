@@ -134,6 +134,31 @@ class Ui_CalculatorDarkView(object):
 " QPushButton#btn_9:pressed,\n"
 " QPushButton#btn_dot:pressed{\n"
 "background-color: #d4d4d2;\n"
+"}\n"
+"\n"
+"/*  All buttons disabled */\n"
+"\n"
+"QPushButton#btn_0:disabled,\n"
+"QPushButton#btn_1:disabled,\n"
+" QPushButton#btn_2:disabled,\n"
+" QPushButton#btn_3:disabled,\n"
+" QPushButton#btn_4:disabled,\n"
+"QPushButton#btn_5:disabled,\n"
+"QPushButton#btn_6:disabled,\n"
+" QPushButton#btn_7:disabled,\n"
+" QPushButton#btn_8:disabled,\n"
+" QPushButton#btn_9:disabled,\n"
+" QPushButton#btn_dot:disabled,\n"
+"QPushButton#btn_divide:disabled,\n"
+" QPushButton#btn_multiply:disabled,\n"
+" QPushButton#btn_minus:disabled,\n"
+" QPushButton#btn_plus:disabled,\n"
+" QPushButton#btn_equal:disabled,\n"
+"QPushButton#btn_ac:d"
+                        "isabled,\n"
+" QPushButton#btn_change_sign:disabled,\n"
+" QPushButton#btn_percent:disabled {\n"
+"color: #999999;\n"
 "}")
         self.verticalLayout = QVBoxLayout(CalculatorDarkView)
         self.verticalLayout.setSpacing(0)
@@ -144,6 +169,7 @@ class Ui_CalculatorDarkView(object):
         font = QFont()
         font.setFamilies([u"Helvetica"])
         font.setPointSize(25)
+        font.setStyleStrategy(QFont.PreferAntialias)
         self.lbl_small.setFont(font)
         self.lbl_small.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing)
         self.lbl_small.setWordWrap(False)
@@ -157,6 +183,7 @@ class Ui_CalculatorDarkView(object):
         font1 = QFont()
         font1.setFamilies([u"Helvetica"])
         font1.setPointSize(50)
+        font1.setStyleStrategy(QFont.PreferAntialias)
         self.lbl_big.setFont(font1)
         self.lbl_big.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.lbl_big.setMargin(0)
@@ -179,6 +206,7 @@ class Ui_CalculatorDarkView(object):
         font2.setFamilies([u"Helvetica"])
         font2.setPointSize(25)
         font2.setBold(False)
+        font2.setStyleStrategy(QFont.PreferAntialias)
         self.btn_1.setFont(font2)
 
         self.gridLayout.addWidget(self.btn_1, 3, 0, 1, 1)
@@ -358,8 +386,8 @@ class Ui_CalculatorDarkView(object):
 
     def retranslateUi(self, CalculatorDarkView):
         CalculatorDarkView.setWindowTitle("")
-        self.lbl_small.setText(QCoreApplication.translate("CalculatorDarkView", u"96 +", None))
-        self.lbl_big.setText(QCoreApplication.translate("CalculatorDarkView", u"0", None))
+        self.lbl_small.setText("")
+        self.lbl_big.setText("")
         self.btn_1.setText(QCoreApplication.translate("CalculatorDarkView", u"1", None))
         self.btn_percent.setText(QCoreApplication.translate("CalculatorDarkView", u"%", None))
         self.btn_4.setText(QCoreApplication.translate("CalculatorDarkView", u"4", None))

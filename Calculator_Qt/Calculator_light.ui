@@ -127,6 +127,30 @@ QPushButton#btn_6:pressed,
  QPushButton#btn_9:pressed,
  QPushButton#btn_dot:pressed{
 background-color: #505050;
+}
+
+/*  All buttons disabled */
+
+QPushButton#btn_0:disabled,
+QPushButton#btn_1:disabled,
+ QPushButton#btn_2:disabled,
+ QPushButton#btn_3:disabled,
+ QPushButton#btn_4:disabled,
+QPushButton#btn_5:disabled,
+QPushButton#btn_6:disabled,
+ QPushButton#btn_7:disabled,
+ QPushButton#btn_8:disabled,
+ QPushButton#btn_9:disabled,
+ QPushButton#btn_dot:disabled,
+QPushButton#btn_divide:disabled,
+ QPushButton#btn_multiply:disabled,
+ QPushButton#btn_minus:disabled,
+ QPushButton#btn_plus:disabled,
+ QPushButton#btn_equal:disabled,
+QPushButton#btn_ac:disabled,
+ QPushButton#btn_change_sign:disabled,
+ QPushButton#btn_percent:disabled {
+color: #bdbdac;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,5">
@@ -151,6 +175,7 @@ background-color: #505050;
       <font>
        <family>Helvetica</family>
        <pointsize>25</pointsize>
+       <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
      <property name="text">
@@ -176,6 +201,7 @@ background-color: #505050;
       <font>
        <family>Helvetica</family>
        <pointsize>50</pointsize>
+       <stylestrategy>PreferAntialias</stylestrategy>
       </font>
      </property>
      <property name="text">
@@ -213,6 +239,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -233,6 +260,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -253,6 +281,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -273,6 +302,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -293,6 +323,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -323,6 +354,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -343,6 +375,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -373,6 +406,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -393,6 +427,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -413,6 +448,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -433,6 +469,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -453,6 +490,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -473,6 +511,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -493,6 +532,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -513,6 +553,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -533,6 +574,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -553,6 +595,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -573,6 +616,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
@@ -593,6 +637,7 @@ background-color: #505050;
          <family>Helvetica</family>
          <pointsize>25</pointsize>
          <bold>false</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="text">
